@@ -75,6 +75,9 @@ public class ProductController {
 		
 		//fetching data from database
 		ResultSet rs=stm.executeQuery(query);
+		System.out.println("");	
+		System.out.println("All Available products>>>>>>");
+		System.out.println("");
 		while(rs.next()) {
 		System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getDouble(3)+" "+rs.getInt(4)+" "+rs.getString(5));
 		}
@@ -89,7 +92,10 @@ public class ProductController {
 	
 	public void UpdateProduct() throws SQLException, Exception{
 		ProductController.connection();
+		System.out.println(" ");
 		ViewProduct();
+		System.out.println(" ");
+		System.out.println("_______________________________________");
 		Product p =new Product();
       	 String query="Select * from products ";
 
@@ -98,11 +104,12 @@ public class ProductController {
          int id=sc.nextInt();
          ResultSet rs=stm.executeQuery(query);
 		 boolean idExists=false;
+		 boolean b=true;
          while(rs.next()) {
         	 if(rs.getInt(1)==id) {
         		idExists=true;
-        	
-            	 while(idExists) {
+        	    b=true;
+            	 while(b) {
             		 System.out.println("______________________________________________________________________");
             		 System.out.println("\t 1: Update Name \n "+"\t 2: Update Price \n"+"\t 3: Update Quantity \n"+"\t 4: Update Category \n"+"\t 5:Exit \n");
             		 System.out.println("______________________________________________________________________");
@@ -119,8 +126,7 @@ public class ProductController {
             		 //updating name 
             		 String query1 = "UPDATE products SET name = '" + name + "' WHERE id = '" + id + "'";            
             			stm.execute(query1);
-            			stm.close();
-            			connection().close();
+            			
             		 System.out.println("Name Updated Succesfully!!!");
             		 break;
             		 
@@ -131,8 +137,7 @@ public class ProductController {
             		 //updating price
             		 String query2 = "UPDATE products SET price = '" + price + "' WHERE id = '" + id + "'";            
             			stm.execute(query2);
-            			stm.close();
-            			connection().close();
+            			
             		 System.out.println("Price Updated Succesfully!!!");
             		 break;
             		 
@@ -143,8 +148,7 @@ public class ProductController {
             		 //updating quantity
                 	 String query3 = "UPDATE products SET Quantity = '" + qty + "' WHERE id = '" + id + "'";            
             			stm.execute(query3);
-            			stm.close();
-            			connection().close();
+            			
                 	 System.out.println("Quantity Updated Succesfully!!!");
                 	 break;
                 	 
@@ -155,20 +159,22 @@ public class ProductController {
             		 //updating category
                      String query4 = "UPDATE products SET category = '" + category + "' WHERE id = '" + id + "'";            
             			stm.execute(query4);
-            			stm.close();
-            			connection().close();
+            			
                      System.out.println("Category Updated Succesfully!!!");
                      break;
                      
                  case 5:
-                	 idExists = false;
-                	 System.out.println("ID does Not Exists!!!");
+                	 b = false;
+                	 System.out.println("Update menu closed successfully!!!");
                 	 break;
                     		 
                     			
             	
             	}	 
-            	 } break;
+            	 }
+            	 stm.close();
+     			connection().close();
+            	 break;
         		 }
         	 
         		 
